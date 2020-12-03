@@ -1,4 +1,4 @@
-package com.example.fragment_tabs.network
+package com.example.fragment_tabs.data
 
 import com.example.fragment_tabs.users.model.User
 import retrofit2.http.GET

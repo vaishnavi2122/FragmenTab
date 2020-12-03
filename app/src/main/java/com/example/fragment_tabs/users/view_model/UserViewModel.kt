@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.fragment_tabs.network.UserApi
+import com.example.fragment_tabs.data.ApiServiceFactory
 import com.example.fragment_tabs.users.model.User
 import kotlinx.coroutines.launch
 
@@ -74,7 +74,7 @@ class UserViewModel : ViewModel() {
             _status.value = UserApiStatus.LOADING
             try{
                 //On Success REST API call
-                _users.value = UserApi.retrofitService.getUsers()
+                _users.value = ApiServiceFactory.retrofitService.getUsers()
                 _filteredUsers.value = _users.value
                 _status.value = UserApiStatus.DONE
             }catch (e: Exception){
@@ -84,5 +84,4 @@ class UserViewModel : ViewModel() {
             }
         }
     }
-
 }

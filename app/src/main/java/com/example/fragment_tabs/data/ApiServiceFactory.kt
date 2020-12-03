@@ -1,4 +1,4 @@
-package com.example.fragment_tabs.network
+package com.example.fragment_tabs.data
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -15,7 +15,7 @@ private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .build()
 
-object UserApi {
+object ApiServiceFactory {
     val retrofitService : ApiService by lazy {
         retrofit.create(ApiService::class.java) }
 }
