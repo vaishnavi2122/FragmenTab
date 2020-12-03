@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="user"
+            type="com.example.fragment_tabs.users.model.User" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/card_view_corner_radius"
+            android:layout_margin="@dimen/margin_wide">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:gravity="start">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="@dimen/image_wide"
+                    android:layout_height="@dimen/image_wide"
+                    android:scaleType="centerCrop"
+                    android:importantForAccessibility="no"
+                    app:imageUrl="@{user.avatar_url}"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_wide"
+                    android:layout_marginLeft="@dimen/margin_wide"
+                    android:layout_toEndOf="@+id/imageView"
+                    android:layout_toRightOf="@+id/imageView"
+                    android:fontFamily="@font/roboto"
+                    android:text="@{String.valueOf(user.login.charAt(0)).toUpperCase()+ user.login.substring(1)}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold"
+                    tools:text="Text1" />
+
+                <TextView
+                    android:id="@+id/user_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/user_name"
+                    android:layout_marginStart="@dimen/margin_wide"
+                    android:layout_marginLeft="@dimen/margin_wide"
+                    android:layout_marginTop="@dimen/margin_wide"
+                    android:layout_toEndOf="@+id/imageView"
+                    android:layout_toRightOf="@+id/imageView"
+                    android:fontFamily="@font/roboto"
+                    android:text="@{`User Type: ` + user.type}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    tools:text="TextView" />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</layout>

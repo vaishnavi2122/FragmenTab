@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <!-- General-->
+    <dimen name="margin_wide">8dp</dimen>
+
+    <!--Users List Item -->
+    <dimen name="card_view_corner_radius">10dp</dimen>
+    <dimen name="image_wide">130dp</dimen>
+
+    <!--Users List -->
+    <dimen name="loading_img_wide">100dp</dimen>
+</resources>
