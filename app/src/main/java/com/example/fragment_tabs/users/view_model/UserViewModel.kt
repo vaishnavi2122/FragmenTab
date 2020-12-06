@@ -13,19 +13,19 @@ import kotlinx.coroutines.launch
 enum class UserApiStatus { LOADING, ERROR, DONE }
 
 class UserViewModel : ViewModel() {
-    // The internal MutableLiveData String that stores the status of the response
+    //stores the status of the response
     private val _status = MutableLiveData<UserApiStatus>()
-
-    // The external immutable LiveData for the storing the status
     val status: LiveData<UserApiStatus>
         get() = _status
 
-    // The internal MutableLiveData String that stores list of USER data
-    private val _users = MutableLiveData<List<User>>()
-
-    // The external immutable LiveData for the storing the USER data from API
+    //stores list of USER data
+    private val _usersData = MutableLiveData<List<User>>()
     val users: LiveData<List<User>>
-        get() = _users
+        get() = _usersData
+
+    private var _navigateToUserDetail = MutableLiveData<User>()
+    val navigateToUserDetail: LiveData<User>
+        get() = _navigateToUserDetail
 
     //For storing copy of original user data
     private val _filteredUsers = MutableLiveData<List<User>>()
@@ -35,6 +35,16 @@ class UserViewModel : ViewModel() {
      */
     init {
         getUsers()
+    }
+
+    //Storing value for list item click
+    fun onUserListItemClicked(user: User){
+        _navigateToUserDetail.value = user
+    }
+
+    //Clearing value once list item click finished for avoiding duplicates on screen orientation
+    fun onUserDetailNavigated(){
+        _navigateToUserDetail.value = null
     }
 
     //Binder for SearchView it will be called when user enter text in search view
@@ -58,10 +68,10 @@ class UserViewModel : ViewModel() {
     */
     private fun filterData(searchText: String) {
         if (searchText.isEmpty()) {
-            _users.value = _filteredUsers.value
+            _usersData.value = _filteredUsers.value
             return
         }
-        _users.value = _filteredUsers.value?.filter { it.login.contains(searchText) }
+        _usersData.value = _filteredUsers.value?.filter { it.login.contains(searchText) }
     }
 
     /**
@@ -74,13 +84,13 @@ class UserViewModel : ViewModel() {
             _status.value = UserApiStatus.LOADING
             try{
                 //On Success REST API call
-                _users.value = ApiServiceFactory.retrofitService.getUsers()
-                _filteredUsers.value = _users.value
+                _usersData.value = ApiServiceFactory.retrofitService.getUsers()
+                _filteredUsers.value = _usersData.value
                 _status.value = UserApiStatus.DONE
             }catch (e: Exception){
                 //On Failure REST API Call
                 _status.value = UserApiStatus.ERROR
-                _users.value = ArrayList()
+                _usersData.value = ArrayList()
             }
         }
     }

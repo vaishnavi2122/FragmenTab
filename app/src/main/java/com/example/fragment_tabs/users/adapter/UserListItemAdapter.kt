@@ -8,12 +8,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fragment_tabs.databinding.UserListItemBinding
 import com.example.fragment_tabs.users.model.User
 
-class UserListItemAdapter : ListAdapter<User, UserListItemAdapter.UserListItemViewHolder>(DiffCallback){
+//OnListItemClick this listener gets called from the layout binding
+class UserListItemListener(val clickListener : (user : User) -> Unit){
+    fun onClick(user: User) = clickListener(user)
+}
+
+class UserListItemAdapter(private val clickListener : UserListItemListener) : ListAdapter<User, UserListItemAdapter.UserListItemViewHolder>(DiffCallback){
     class UserListItemViewHolder(private var binding: UserListItemBinding) : RecyclerView.ViewHolder(binding.root){
         //Binding data to the view
-        fun bind(user : User){
+        fun bind(user: User, clickListener: UserListItemListener){
             binding.user = user
             binding.executePendingBindings()
+
+            //Setting click listener to binding
+            binding.clickListener = clickListener
         }
     }
 
@@ -23,8 +31,8 @@ class UserListItemAdapter : ListAdapter<User, UserListItemAdapter.UserListItemVi
 
     override fun onBindViewHolder(holder: UserListItemViewHolder, position: Int) {
         val item = getItem(position)
-        //Calling binder to set the current view
-        holder.bind(item)
+        //Calling binder to set the current view wit click listener for item click
+        holder.bind(item, clickListener)
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<User>(){

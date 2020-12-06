@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.fragment_tabs.databinding.FragmentUserBinding
 import com.example.fragment_tabs.users.adapter.UserListItemAdapter
+import com.example.fragment_tabs.users.adapter.UserListItemListener
 import com.example.fragment_tabs.users.view_model.UserViewModel
 
 class UserFragment : Fragment() {
@@ -36,7 +38,19 @@ class UserFragment : Fragment() {
         binding.userViewModel = viewModel
 
         //Adapter for RecyclerView
-        binding.recyclerView.adapter = UserListItemAdapter()
+        binding.recyclerView.adapter = UserListItemAdapter(UserListItemListener{user ->
+            viewModel.onUserListItemClicked(user)
+        })
+
+        //On List item click navigate to detail view
+        viewModel.navigateToUserDetail.observe(viewLifecycleOwner, { user ->
+            user?.let {
+                this.findNavController().navigate(
+                    UserFragmentDirections
+                        .actionUserFragmentToUserDetailFragment(user.login))
+                viewModel.onUserDetailNavigated()
+            }
+        })
 
         return binding.root
     }

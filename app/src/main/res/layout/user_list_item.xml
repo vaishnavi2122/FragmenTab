@@ -7,10 +7,14 @@
         <variable
             name="user"
             type="com.example.fragment_tabs.users.model.User" />
+        <variable
+            name="clickListener"
+            type="com.example.fragment_tabs.users.adapter.UserListItemListener" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> clickListener.onClick(user)}">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
